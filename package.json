@@ -1,0 +1,16 @@
+{
+  "name": "utube",
+  "version": "1.0.0",
+  "description": "the best way to watch videos.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cruelladevil/utube-clone.git"
+  },
+  "author": "Cruella De Vil<dev.timetravel@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cruelladevil/utube-clone/issues"
+  },
+  "homepage": "https://github.com/cruelladevil/utube-clone#readme"
+}
