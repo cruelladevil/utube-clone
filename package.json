@@ -6,7 +6,7 @@
     "url": "git+https://github.com/cruelladevil/utube-clone.git"
   },
   "scripts": {
-    "start": "node index.js"
+    "dev": "nodemon --exec babel-node index.js"
   },
   "author": "Cruella De Vil<dev.timetravel@gmail.com",
   "license": "MIT",
@@ -16,5 +16,11 @@
   "homepage": "https://github.com/cruelladevil/utube-clone#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "nodemon": "^2.0.15"
   }
 }
