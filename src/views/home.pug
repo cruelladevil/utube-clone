@@ -3,7 +3,7 @@ include mixins/video
 
 block content
   h2 welcome to utube homepage
-  each item in videos
-    +video(item)
+  each video in videos
+    +video(video)
   else
     li Sorry, Nothing Found.
