@@ -39,7 +39,11 @@ export const postEditVideo = async (req, res) => {
   return res.redirect(`/videos/${id}`);
 };
 export const searchVideo = (req, res) => res.send("Search");
-export const deleteVideo = (req, res) => res.send("Delete Video");
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await videoModel.findByIdAndDelete(id);
+  return res.redirect("/");
+};
 export const getUploadVideo = (req, res) => {
   res.render("upload", { pageTitle: "Upload Video", fakeUser });
 };
