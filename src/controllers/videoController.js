@@ -38,7 +38,18 @@ export const postEditVideo = async (req, res) => {
   });
   return res.redirect(`/videos/${id}`);
 };
-export const searchVideo = (req, res) => res.send("Search");
+export const searchVideo = async (req, res) => {
+  const { search_query } = req.query;
+  let videos = [];
+  if (search_query) {
+    videos = await videoModel.find({
+      title: {
+        $regex: new RegExp(search_query, "i"),
+      },
+    });
+  }
+  return res.render("search", { pageTitle: "Search", fakeUser, videos });
+}
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await videoModel.findByIdAndDelete(id);
