@@ -12,12 +12,8 @@ html(lang="ko")
             a(href="/videos/upload") Upload Video
           li
             a(href="/search") Search
-          if fakeUser.loggedIn
-            li
-              a(href="/logout") Log Out
-          else
-            li
-              a(href="/login") Log In
+          li
+            a(href="/join") Join
       h1=pageTitle
     main
       block content

@@ -1,35 +1,31 @@
-const fakeUser = {
-  username: "Cruella",
-  loggedIn: true,
-};
 import videoModel from "../model/Video";
 
 export const recommendedVideo = async (req, res) => {
   const videos = await videoModel.find({});
-  return res.render("home", { pageTitle: "Home", fakeUser, videos });
+  return res.render("home", { pageTitle: "Home", videos });
 };
 export const watchVideo = async (req, res) => {
   const { id } = req.params;
   const video = await videoModel.findById(id);
   if (video === null) {
-    return res.render("404", { pageTitle: "Video Not Found", fakeUser });
+    return res.render("404", { pageTitle: "Video Not Found" });
   }
-  return res.render("watch", { pageTitle: video.title, fakeUser, video });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 export const getEditVideo = async (req, res) => {
   const { id } = req.params;
   const video = await videoModel.findById(id);
   if (video === null) {
-    return res.render("404", { pageTitle: "Video Not Found", fakeUser });
+    return res.render("404", { pageTitle: "Video Not Found" });
   }
-  return res.render("edit", { pageTitle: `Edit : ${video.title}`, fakeUser, video });
+  return res.render("edit", { pageTitle: `Edit : ${video.title}`, video });
 };
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
   const video = await videoModel.exists({ _id: id });
   if (!video) {
-    return res.render("404", { pageTitle: "Video Not Found", fakeUser });
+    return res.render("404", { pageTitle: "Video Not Found" });
   }
   await videoModel.findByIdAndUpdate(id, {
     title,
@@ -48,7 +44,7 @@ export const searchVideo = async (req, res) => {
       },
     });
   }
-  return res.render("search", { pageTitle: "Search", fakeUser, videos });
+  return res.render("search", { pageTitle: "Search", videos });
 }
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
@@ -56,7 +52,7 @@ export const deleteVideo = async (req, res) => {
   return res.redirect("/");
 };
 export const getUploadVideo = (req, res) => {
-  res.render("upload", { pageTitle: "Upload Video", fakeUser });
+  res.render("upload", { pageTitle: "Upload Video" });
 };
 export const postUploadVideo = async (req, res) => {
   const { title, description, hashtags } = req.body;
@@ -68,6 +64,6 @@ export const postUploadVideo = async (req, res) => {
     });
     return res.redirect("/");
   } catch (err) {
-    return res.render("upload", { pageTitle: "Upload Video", fakeUser, errorMessage: err._message });
+    return res.render("upload", { pageTitle: "Upload Video", errorMessage: err._message });
   }
 };
