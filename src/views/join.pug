@@ -2,7 +2,7 @@ extends base
 
 block content
   if errorMessage
-    sapn=errorMessage
+    span=errorMessage
   form(method="POST")
     input(name="name", type="text", placeholder="Name", required)
     input(name="email", type="email", placeholder="Email", required)
@@ -11,3 +11,7 @@ block content
     input(name="password2", type="password", placeholder="Confirm Password", required)
     input(name="location", type="text", placeholder="Location")
     input(type="submit", value="Join")
+  hr
+  div
+    span="Already have an account?"
+    a(href="/login")  Login now &rarr;
