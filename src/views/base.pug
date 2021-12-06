@@ -12,8 +12,14 @@ html(lang="ko")
             a(href="/videos/upload") Upload Video
           li
             a(href="/search") Search
-          li
-            a(href="/join") Join
+          if locals.loggedIn
+            li
+              a(href="/logout") Logout
+          else
+            li 
+              a(href="/login") Login
+            li
+              a(href="/join") Join
       h1=pageTitle
     main
       block content
