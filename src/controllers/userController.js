@@ -1,6 +1,5 @@
 import userModel from "../model/User";
 import bcrypt from "bcrypt";
-import session from "express-session";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
@@ -28,7 +27,12 @@ export const postJoin = async (req, res) => {
   });
   return res.redirect("/login");
 };
-export const editUser = (req, res) => res.send("Edit User");
+export const getEditUser = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+export const postEditUser = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+}
 export const deleteUser = (req, res) => res.send("Delete User");
 export const getLogin = (req, res) => res.render("login", { pageTitle: "Login" });
 export const postLogin = async (req, res) => {
