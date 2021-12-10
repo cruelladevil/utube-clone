@@ -30,8 +30,19 @@ export const postJoin = async (req, res) => {
 export const getEditUser = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
-export const postEditUser = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+export const postEditUser = async (req, res) => {
+  const { session: { user: { _id } }, body: { email, username, location } } = req;
+  const updatedUser = await userModel.findByIdAndUpdate(
+    _id,
+    {
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/users/edit");
 }
 export const deleteUser = (req, res) => res.send("Delete User");
 export const getLogin = (req, res) => res.render("login", { pageTitle: "Login" });
