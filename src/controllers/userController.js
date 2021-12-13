@@ -31,10 +31,11 @@ export const getEditUser = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEditUser = async (req, res) => {
-  const { session: { user: { _id } }, body: { email, username, location } } = req;
+  const { session: { user: { _id, avatarUrl } }, body: { email, username, location }, file } = req;
   const updatedUser = await userModel.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       email,
       username,
       location,
