@@ -72,7 +72,14 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 }
-export const seeUser = (req, res) => res.send("See User");
+export const seeUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await userModel.findById(id);
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User Not Found" });
+  }
+  return res.render("profile", { pageTitle: user.name, user });
+};
 export const getChangePassword = (req, res) => {
   return res.render("change-password", { pageTitle: "Change Password" });
 }

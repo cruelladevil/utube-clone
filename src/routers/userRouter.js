@@ -8,6 +8,6 @@ userRouter.route("/edit").all(protectorMiddleware).get(getEditUser).post(avatarU
 userRouter.route("/change-password").all(protectorMiddleware).get(getChangePassword).post(postChangePassword);
 userRouter.get("/delete", protectorMiddleware, deleteUser);
 userRouter.get("/logout", protectorMiddleware, logout);
-userRouter.get("/:id", protectorMiddleware, seeUser);
+userRouter.get("/:id", seeUser);
 
 export default userRouter;
