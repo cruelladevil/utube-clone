@@ -1,13 +1,13 @@
 extends base
 
 block content
-  img(src="/" + user.avatarUrl, width="100", height="100")
+  img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
   form(method="POST", enctype="multipart/form-data")
     label(for="avatar") Avatar
     input(name="avatar", type="file", id="avatar", accept="image/*")
-    input(name="email", type="email", placeholder="Email", value=user.email, required)
-    input(name="username", type="text", placeholder="Username", value=user.username, required)
-    input(name="location", type="text", placeholder="Location" value=user.location)
+    input(name="email", type="email", placeholder="Email", value=loggedInUser.email, required)
+    input(name="username", type="text", placeholder="Username", value=loggedInUser.username, required)
+    input(name="location", type="text", placeholder="Location" value=loggedInUser.location)
     input(type="submit", value="Update Profile")
   hr
   a(href="change-password") Change Password &rarr;
