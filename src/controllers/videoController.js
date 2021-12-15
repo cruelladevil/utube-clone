@@ -1,3 +1,4 @@
+import userModel from "../model/User";
 import videoModel from "../model/Video";
 
 export const recommendedVideo = async (req, res) => {
@@ -59,13 +60,16 @@ export const postUploadVideo = async (req, res) => {
   const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
-    await videoModel.create({
+    const newVideo = await videoModel.create({
       title,
       fileUrl,
       description,
       owner: _id,
       hashtags: videoModel.formatHashtags(hashtags),
     });
+    const user = await userModel.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
     return res.redirect("/");
   } catch (err) {
     return res.render("upload", { pageTitle: "Upload Video", errorMessage: err._message });

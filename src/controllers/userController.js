@@ -44,7 +44,7 @@ export const postEditUser = async (req, res) => {
   );
   req.session.user = updatedUser;
   return res.redirect("/users/edit");
-}
+};
 export const deleteUser = (req, res) => res.send("Delete User");
 export const getLogin = (req, res) => res.render("login", { pageTitle: "Login" });
 export const postLogin = async (req, res) => {
@@ -71,10 +71,10 @@ export const postLogin = async (req, res) => {
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
-}
+};
 export const seeUser = async (req, res) => {
   const { id } = req.params;
-  const user = await userModel.findById(id);
+  const user = await userModel.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User Not Found" });
   }
@@ -82,7 +82,7 @@ export const seeUser = async (req, res) => {
 };
 export const getChangePassword = (req, res) => {
   return res.render("change-password", { pageTitle: "Change Password" });
-}
+};
 export const postChangePassword = async (req, res) => {
   const pageTitle = "Change Password";
   const { session: { user: { _id, password } }, body: { oldPassword, newPassword, newPassword2 } } = req;
@@ -103,4 +103,4 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
   await user.save();
   return res.redirect("/users/logout");
-}
+};
