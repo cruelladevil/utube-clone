@@ -6,7 +6,7 @@ export const recommendedVideo = async (req, res) => {
 };
 export const watchVideo = async (req, res) => {
   const { id } = req.params;
-  const video = await videoModel.findById(id);
+  const video = await videoModel.findById(id).populate("owner");
   if (video === null) {
     return res.status(404).render("404", { pageTitle: "Video Not Found" });
   }
@@ -45,7 +45,7 @@ export const searchVideo = async (req, res) => {
     });
   }
   return res.render("search", { pageTitle: "Search", videos });
-}
+};
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await videoModel.findByIdAndDelete(id);
@@ -55,6 +55,7 @@ export const getUploadVideo = (req, res) => {
   res.render("upload", { pageTitle: "Upload Video" });
 };
 export const postUploadVideo = async (req, res) => {
+  const { user: { _id } } = req.session;
   const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
@@ -62,6 +63,7 @@ export const postUploadVideo = async (req, res) => {
       title,
       fileUrl,
       description,
+      owner: _id,
       hashtags: videoModel.formatHashtags(hashtags),
     });
     return res.redirect("/");
