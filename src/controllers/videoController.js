@@ -8,25 +8,33 @@ export const recommendedVideo = async (req, res) => {
 export const watchVideo = async (req, res) => {
   const { id } = req.params;
   const video = await videoModel.findById(id).populate("owner");
-  if (video === null) {
+  if (!video) {
     return res.status(404).render("404", { pageTitle: "Video Not Found" });
   }
   return res.render("watch", { pageTitle: video.title, video });
 };
 export const getEditVideo = async (req, res) => {
   const { id } = req.params;
+  const { user: { _id } } = req.session;
   const video = await videoModel.findById(id);
-  if (video === null) {
+  if (!video) {
     return res.status(404).render("404", { pageTitle: "Video Not Found" });
+  }
+  if (String(video.owner) !== String(_id)) {
+    return res.status(403).redirect("/");
   }
   return res.render("edit-video", { pageTitle: `Edit : ${video.title}`, video });
 };
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
+  const { user: { _id } } = req.session;
   const { title, description, hashtags } = req.body;
-  const video = await videoModel.exists({ _id: id });
+  const video = await videoModel.findById(id);
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video Not Found" });
+  }
+  if (String(video.owner) !== String(_id)) {
+    return res.status(403).redirect("/");
   }
   await videoModel.findByIdAndUpdate(id, {
     title,
@@ -49,7 +57,18 @@ export const searchVideo = async (req, res) => {
 };
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
+  const { user: { _id } } = req.session;
+  const video = await videoModel.findById(id);
+  if (!video) {
+    return res.status(404).render("404", { pageTitle: "Video Not Found" });
+  }
+  if (String(video.owner._id) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
   await videoModel.findByIdAndDelete(id);
+  const user = await userModel.findById(_id);
+  user.videos.splice(user.videos.indexOf(id), 1);
+  user.save();
   return res.redirect("/");
 };
 export const getUploadVideo = (req, res) => {
