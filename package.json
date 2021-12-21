@@ -6,8 +6,8 @@
     "url": "git+https://github.com/cruelladevil/utube-clone.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "author": "Cruella De Vil<dev.timetravel@gmail.com",
   "license": "MIT",
